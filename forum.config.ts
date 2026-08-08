@@ -2,103 +2,141 @@ import { defineForumConfig } from './src/lib/config/schema';
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- *  Discussion Kit configuration
+ *  Whitedragon Dev Hub - Forum Configuration
  * ─────────────────────────────────────────────────────────────────────────────
- *  Every option is optional — anything you omit falls back to a sensible
- *  default (see src/lib/config/schema.ts for the full schema and defaults).
- *
- *  Quick start for your own forum:
- *    1. Enable Discussions on your repository and create some categories.
- *    2. Set `site` to your branding.
- *    3. Either set `repo.owner` / `repo.name`, or delete them — when built by
- *       the included GitHub Actions workflow they are auto-detected, so a fork
- *       can deploy without touching any code.
- *    4. Optionally list admin logins below.
+ *  A DEV.to-style community forum powered by GitHub Discussions
+ *  Deployed on GitHub Pages with full authentication and reputation system
+ * 
+ *  ⚠️ EDIT THIS ONE PLACEHOLDER:
+ *     - Ov23ctmoDN6GtAyNvRcE  → Your actual Client ID from GitHub OAuth App
  */
 export default defineForumConfig({
+	// ─── Site Branding ──────────────────────────────────────────────────────
 	site: {
-		name: 'Discussion Kit',
-		description: 'A community forum powered by GitHub Discussions',
-		// logo: '💬',                        // emoji shown instead of the default icon
-		footer: 'Powered by GitHub Discussions'
+		name: 'Whitedragon Dev Hub',
+		description: 'A place for the members of whitedragon-dev to share knowledge',
+		logo: '❖',                        // Unique emoji logo
+		footer: 'Built with ❤️ and GitHub Discussions'
 	},
 
+	// ─── Repository ──────────────────────────────────────────────────────────
 	repo: {
-		// Omit owner/name to auto-detect when building in GitHub Actions.
-		owner: 'NotReeceHarris',
-		name: 'discussion-kit'
+		owner: 'whitedragon-dev',
+		name: 'whitedragon-forum'
 	},
 
-	// Extra header links
+	// ─── Navigation ──────────────────────────────────────────────────────────
 	nav: [
-		// { label: 'Docs', href: 'https://example.com/docs', external: true }
+		{ 
+			label: 'GitHub', 
+			href: 'https://github.com/whitedragon-dev/whitedragon-forum', 
+			external: true 
+		},
+		{ 
+			label: 'Discussions', 
+			href: 'https://github.com/whitedragon-dev/whitedragon-forum/discussions', 
+			external: true 
+		}
 	],
 
+	// ─── Authentication ──────────────────────────────────────────────────────
 	auth: {
-		allowToken: true,
+		allowToken: true,  // Allows PAT sign-in as fallback
 		oauth: {
-			// Fill both to enable the "Continue with GitHub" button (see README):
-			clientId: 'Ov23li1QctsLGHqbcIwq',
-			proxyUrl: 'https://discussion-kit-oauth.reeceharris.workers.dev'
+			// 🔑 EDIT THIS: Replace with your GitHub OAuth App Client ID
+			clientId: 'Ov23ctmoDN6GtAyNvRcE',
+			
+			// 🌐 Your Cloudflare Worker URL (already correct)
+			proxyUrl: 'https://whitedragon-forum-oauth.whitedragon-dev.workers.dev/'
 		}
 	},
 
+	// ─── Admins & Moderators ─────────────────────────────────────────────────
 	admins: {
-		logins: ['NotReeceHarris'], // GitHub logins that get the admin badge
-		badgeLabel: 'Admin'  // label shown next to admin usernames
+		logins: ['whitedragon-one', 'whitedragon-dev'],
+		badgeLabel: 'Admin'
 	},
 
-	// Custom badges shown next to usernames: label → GitHub logins
+	// ─── Custom Badges ──────────────────────────────────────────────────────
 	badges: {
-		'Moderator': ['NotDevenBriers'],
-		// 'Contributor': ['someuser', 'anotheruser']
+		'Moderator': ['whitedragon-zero'],
+		// Add more badges as needed:
+		// 'Contributor': ['username1', 'username2'],
 	},
 
+	// ─── Content Settings ──────────────────────────────────────────────────
 	content: {
 		pageSize: 25,
-		sort: 'CREATED_AT',         // or 'UPDATED_AT'
+		sort: 'CREATED_AT',
 		articles: { enabled: true },
 		topics: {
-			include: [],              // only these category slugs (empty = all)
-			exclude: [],              // hide these category slugs
-			restricted: ['announcements'] // announcement-format slugs: only maintainers can post
+			include: ['general', 'showcase', 'ideas', 'qna', 'announcements'],
+			exclude: [],
+			restricted: ['announcements']  // Only admins can post here
 		}
 	},
 
+	// ─── Features ──────────────────────────────────────────────────────────
 	features: {
 		search: true,
 		reactions: true,
 		upvotes: true
 	},
 
-	// Optional reputation system: users earn rep for activity, topics can
-	// require a minimum rep to post. The rep.yml workflow maintains the
-	// ledger (rep-data branch) and reactively moderates posts made directly
-	// on github.com. Uncomment to enable:
+	// ─── Reputation System (Like DEV.to) ──────────────────────────────────
 	rep: {
 		enabled: true,
-		gains: { post: 5, comment: 2, answerAccepted: 15 },
-		dailyCaps: { post: 25, comment: 10 },      // rep per UTC day, 0 = uncapped
-		topics: { showcase: 50 },                  // slug → min rep to post
-		onViolation: 'move',                       // 'move' | 'lock' | 'delete'
-		fallbackTopic: 'general'                   // where moved posts land
+		gains: { 
+			post: 5,
+			comment: 2,
+			answerAccepted: 15
+		},
+		dailyCaps: { 
+			post: 25,
+			comment: 10
+		},
+		topics: { 
+			showcase: 50,  // Need 50 rep to post in showcase
+		},
+		onViolation: 'move',
+		fallbackTopic: 'general',
+		exemptMaintainers: true
 	},
 
-	// Cold-store archive: the data-sync workflow snapshots the forum to the
-	// `data` branch, and signed-out visitors browse it read-only instead of
-	// hitting the (auth-only) GitHub API. Public repositories only.
+	// ─── Read-Only Archive (For Signed-Out Visitors) ──────────────────────
 	archive: {
 		enabled: true
 	},
 
-	// Override any CSS token per scheme, e.g. a blue primary:
+	// ─── Theme (DEV.to Purple Style) ──────────────────────────────────────
 	theme: {
 		light: {
-			// primary: 'hsl(221 83% 53%)',
-			// primaryForeground: 'hsl(0 0% 100%)'
+			primary: 'hsl(260 100% 40%)',        // DEV.to purple #5800d0
+			primaryForeground: 'hsl(0 0% 100%)',
+			background: 'hsl(0 0% 98%)',
+			card: 'hsl(0 0% 100%)',
+			cardForeground: 'hsl(0 0% 10%)',
+			border: 'hsl(0 0% 90%)',
+			muted: 'hsl(0 0% 96%)',
+			mutedForeground: 'hsl(0 0% 45%)',
+			accent: 'hsl(260 100% 40%)',
+			accentForeground: 'hsl(0 0% 100%)',
+			ring: 'hsl(260 100% 40%)',
+			link: 'hsl(260 100% 40%)'
 		},
 		dark: {
-			// primary: 'hsl(217 91% 60%)'
+			primary: 'hsl(260 100% 55%)',        // Brighter purple for dark mode
+			primaryForeground: 'hsl(0 0% 100%)',
+			background: 'hsl(0 0% 8%)',
+			card: 'hsl(0 0% 13%)',
+			cardForeground: 'hsl(0 0% 95%)',
+			border: 'hsl(0 0% 20%)',
+			muted: 'hsl(0 0% 15%)',
+			mutedForeground: 'hsl(0 0% 60%)',
+			accent: 'hsl(260 100% 55%)',
+			accentForeground: 'hsl(0 0% 100%)',
+			ring: 'hsl(260 100% 55%)',
+			link: 'hsl(260 100% 60%)'
 		}
 	}
 });
