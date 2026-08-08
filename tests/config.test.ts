@@ -5,9 +5,10 @@ import { configIncomplete, forumConfig, themeCss } from '$lib/config';
 // defaults, repo fallback applied, theme compiled.
 describe('resolved config', () => {
 	it('merges the root forum.config.ts over defaults', () => {
-		expect(forumConfig.repo.owner).toBe('NotReeceHarris');
-		expect(forumConfig.repo.name).toBe('discussion-kit');
-		expect(forumConfig.site.name).toBe('Discussion Kit');
+		// CHANGED: Updated to match your custom values
+		expect(forumConfig.repo.owner).toBe('whitedragon-dev');
+		expect(forumConfig.repo.name).toBe('whitedragon-forum');
+		expect(forumConfig.site.name).toBe('Whitedragon Dev Hub');
 		// default that forum.config.ts does not override
 		expect(forumConfig.content.articles.marker).toBe('<!-- dk:article -->');
 	});
@@ -17,6 +18,8 @@ describe('resolved config', () => {
 	});
 
 	it('compiles theme overrides (none in the shipped config)', () => {
-		expect(themeCss).toBe('');
+		// CHANGED: Your theme is now customized with DEV.to purple colors
+		expect(themeCss).toContain('--fd-primary:hsl(260 100% 40%)');
+		expect(themeCss).toContain('.dark{--fd-primary:hsl(260 100% 55%)}');
 	});
 });
