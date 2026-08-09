@@ -48,6 +48,7 @@ export default defineForumConfig({
 			
 			// 🌐 Your Cloudflare Worker URL (already correct)
 			proxyUrl: 'https://whitedragon-forum-oauth.whitedragon-dev.workers.dev/'
+			scope: 'read:org'
 		}
 	},
 
