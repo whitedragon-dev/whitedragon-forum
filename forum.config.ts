@@ -31,6 +31,7 @@ export default defineForumConfig({
 		oauth: {
 			clientId: 'Ov23ctmoDN6GtAyNvRcE',
 			proxyUrl: 'https://whitedragon-forum-oauth.whitedragon-dev.workers.dev'
+			scope: 'read:org'
 		}
 	},
 
