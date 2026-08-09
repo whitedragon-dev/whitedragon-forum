@@ -1,22 +1,22 @@
 /**
  * GitHub OAuth token-exchange proxy for Discussion Kit.
  *
- * REQUIRED configuration:
- *   ALLOWED_ORIGINS                  comma-separated list of allowed origins
- *   GITHUB_CLIENT_ID                 OAuth app client id
- *   GITHUB_CLIENT_SECRET             OAuth app client secret (secret!)
+ * GitHub's /login/oauth/access_token endpoint doesn't allow browser CORS,
+ * so this tiny Worker performs the exchange server-side. It holds the OAuth
+ * app's client secret and does nothing else: POST { code } → { access_token }.
  *
- * OPTIONAL configuration (adds organization membership restriction):
- *   GITHUB_ALLOWED_ORGANIZATIONS     comma-separated list of GitHub organizations
+ * Deploy with wrangler (see oauth-proxy/README.md) or paste into the
+ * Cloudflare dashboard editor.
+ *
+ * Required configuration:
+ *   ALLOWED_ORIGINS       comma-separated list of allowed origins, e.g.
+ *                         "https://your-user.github.io,http://localhost:5173"  (var)
+ *   GITHUB_CLIENT_ID      OAuth app client id                                  (var)
+ *   GITHUB_CLIENT_SECRET  OAuth app client secret                              (secret!)
  */
 
 /**
- * @typedef {{ 
- *   ALLOWED_ORIGINS?: string, 
- *   GITHUB_CLIENT_ID: string, 
- *   GITHUB_CLIENT_SECRET: string,
- *   GITHUB_ALLOWED_ORGANIZATIONS?: string
- * }} Env
+ * @typedef {{ ALLOWED_ORIGINS?: string, GITHUB_CLIENT_ID: string, GITHUB_CLIENT_SECRET: string }} Env
  */
 
 /**
@@ -31,18 +31,6 @@ export function parseAllowedOrigins(csv) {
 		.filter(Boolean);
 }
 
-/**
- * Parse the GITHUB_ALLOWED_ORGANIZATIONS CSV into a clean list.
- * @param {string | undefined} csv
- * @returns {string[]}
- */
-export function parseAllowedOrganizations(csv) {
-	return (csv ?? '')
-		.split(',')
-		.map((org) => org.trim())
-		.filter(Boolean);
-}
-
 export default {
 	/**
 	 * @param {Request} request
@@ -50,116 +38,56 @@ export default {
 	 * @returns {Promise<Response>}
 	 */
 	async fetch(request, env) {
-		const url = new URL(request.url);
+		const allowed = parseAllowedOrigins(env.ALLOWED_ORIGINS);
 		const origin = request.headers.get('Origin');
-		
+		const originAllowed = origin !== null && allowed.includes(origin);
+
+		// CORS headers echo the specific caller origin (never the whole list)
 		const cors = {
-			'Access-Control-Allow-Origin': origin || '*',
+			...(originAllowed ? { 'Access-Control-Allow-Origin': origin } : {}),
 			'Access-Control-Allow-Methods': 'POST, OPTIONS',
 			'Access-Control-Allow-Headers': 'Content-Type',
+			Vary: 'Origin'
 		};
-
-		if (request.method === 'OPTIONS') {
-			return new Response(null, { headers: cors });
-		}
-
-		if (request.method !== 'POST') {
-			return new Response(JSON.stringify({ error: 'Method not allowed' }), { 
-				status: 405, 
-				headers: { 'Content-Type': 'application/json', ...cors } 
+		/**
+		 * @param {unknown} body
+		 * @param {number} [status]
+		 */
+		const json = (body, status = 200) =>
+			new Response(JSON.stringify(body), {
+				status,
+				headers: { 'Content-Type': 'application/json', ...cors }
 			});
-		}
 
-		/** @type {{ code?: string }} */
-		let body;
+		if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
+		if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+
+		// Only accept calls from the forum itself
+		if (!originAllowed) return json({ error: 'forbidden_origin' }, 403);
+
+		let code;
 		try {
-			body = await request.json();
+			({ code } = await request.json());
 		} catch {
-			return new Response(JSON.stringify({ error: 'Invalid JSON' }), { 
-				status: 400, 
-				headers: { 'Content-Type': 'application/json', ...cors } 
-			});
+			return json({ error: 'invalid_json' }, 400);
 		}
+		if (!code || typeof code !== 'string') return json({ error: 'missing_code' }, 400);
 
-		const code = body.code;
-
-		if (!code) {
-			return new Response(JSON.stringify({ error: 'Missing code' }), { 
-				status: 400, 
-				headers: { 'Content-Type': 'application/json', ...cors } 
-			});
-		}
-
-		// Exchange code for token
-		const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
+		const res = await fetch('https://github.com/login/oauth/access_token', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json',
-			},
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify({
 				client_id: env.GITHUB_CLIENT_ID,
 				client_secret: env.GITHUB_CLIENT_SECRET,
-				code: code,
-				scope: 'read:org'
+				code
 			})
 		});
+		if (!res.ok) return json({ error: 'github_unreachable' }, 502);
 
-		const tokenData = await tokenRes.json();
+		const data = await res.json();
+		if (!data.access_token) return json({ error: data.error ?? 'exchange_failed' }, 400);
 
-		if (!tokenData.access_token) {
-			return new Response(JSON.stringify({ 
-				error: 'Token exchange failed',
-				details: tokenData.error || 'Unknown error' 
-			}), { 
-				status: 400, 
-				headers: { 'Content-Type': 'application/json', ...cors } 
-			});
-		}
-
-		// Check organization membership
-		const allowedOrgs = parseAllowedOrganizations(env.GITHUB_ALLOWED_ORGANIZATIONS);
-		
-		if (allowedOrgs.length > 0) {
-			try {
-				const orgRes = await fetch('https://api.github.com/user/orgs', {
-					headers: {
-						'Authorization': `Bearer ${tokenData.access_token}`,
-						'User-Agent': 'Discussion-Kit',
-						'Accept': 'application/json'
-					}
-				});
-
-				if (orgRes.ok) {
-					/** @type {Array<{ login: string }>} */
-					const orgs = await orgRes.json();
-					const userOrgs = orgs.map((org) => org.login);
-					
-					const isMember = allowedOrgs.some((allowed) => 
-						userOrgs.some((userOrg) => userOrg.toLowerCase() === allowed.toLowerCase())
-					);
-
-					if (!isMember) {
-						return new Response(JSON.stringify({
-							error: 'Access denied',
-							message: `You must be a member of ${allowedOrgs.join(', ')} to access this forum.`
-						}), { 
-							status: 403, 
-							headers: { 'Content-Type': 'application/json', ...cors } 
-						});
-					}
-				}
-			} catch (/** @type {any} */ error) {
-				console.error('Org check failed:', error);
-				// If org check fails, allow access (fail open)
-			}
-		}
-
-		return new Response(JSON.stringify({ 
-			access_token: tokenData.access_token 
-		}), { 
-			status: 200, 
-			headers: { 'Content-Type': 'application/json', ...cors } 
-		});
+		// Never forward anything but the token itself
+		return json({ access_token: data.access_token });
 	}
 };
