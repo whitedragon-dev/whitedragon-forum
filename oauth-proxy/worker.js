@@ -1,4 +1,54 @@
+/**
+ * GitHub OAuth token-exchange proxy for Discussion Kit.
+ *
+ * REQUIRED configuration:
+ *   ALLOWED_ORIGINS                  comma-separated list of allowed origins
+ *   GITHUB_CLIENT_ID                 OAuth app client id
+ *   GITHUB_CLIENT_SECRET             OAuth app client secret (secret!)
+ *
+ * OPTIONAL configuration (adds organization membership restriction):
+ *   GITHUB_ALLOWED_ORGANIZATIONS     comma-separated list of GitHub organizations
+ */
+
+/**
+ * @typedef {{ 
+ *   ALLOWED_ORIGINS?: string, 
+ *   GITHUB_CLIENT_ID: string, 
+ *   GITHUB_CLIENT_SECRET: string,
+ *   GITHUB_ALLOWED_ORGANIZATIONS?: string
+ * }} Env
+ */
+
+/**
+ * Parse the ALLOWED_ORIGINS CSV into a clean list.
+ * @param {string | undefined} csv
+ * @returns {string[]}
+ */
+export function parseAllowedOrigins(csv) {
+	return (csv ?? '')
+		.split(',')
+		.map((origin) => origin.trim().replace(/\/+$/, ''))
+		.filter(Boolean);
+}
+
+/**
+ * Parse the GITHUB_ALLOWED_ORGANIZATIONS CSV into a clean list.
+ * @param {string | undefined} csv
+ * @returns {string[]}
+ */
+export function parseAllowedOrganizations(csv) {
+	return (csv ?? '')
+		.split(',')
+		.map((org) => org.trim())
+		.filter(Boolean);
+}
+
 export default {
+	/**
+	 * @param {Request} request
+	 * @param {Env} env
+	 * @returns {Promise<Response>}
+	 */
 	async fetch(request, env) {
 		const url = new URL(request.url);
 		const origin = request.headers.get('Origin');
@@ -20,16 +70,18 @@ export default {
 			});
 		}
 
-		let code;
+		/** @type {{ code?: string }} */
+		let body;
 		try {
-			const body = await request.json();
-			code = body.code;
+			body = await request.json();
 		} catch {
 			return new Response(JSON.stringify({ error: 'Invalid JSON' }), { 
 				status: 400, 
 				headers: { 'Content-Type': 'application/json', ...cors } 
 			});
 		}
+
+		const code = body.code;
 
 		if (!code) {
 			return new Response(JSON.stringify({ error: 'Missing code' }), { 
@@ -49,7 +101,7 @@ export default {
 				client_id: env.GITHUB_CLIENT_ID,
 				client_secret: env.GITHUB_CLIENT_SECRET,
 				code: code,
-				scope: 'read:org' // Always request read:org scope
+				scope: 'read:org'
 			})
 		});
 
@@ -66,7 +118,7 @@ export default {
 		}
 
 		// Check organization membership
-		const allowedOrgs = (env.GITHUB_ALLOWED_ORGANIZATIONS || '').split(',').filter(Boolean);
+		const allowedOrgs = parseAllowedOrganizations(env.GITHUB_ALLOWED_ORGANIZATIONS);
 		
 		if (allowedOrgs.length > 0) {
 			try {
@@ -79,11 +131,12 @@ export default {
 				});
 
 				if (orgRes.ok) {
+					/** @type {Array<{ login: string }>} */
 					const orgs = await orgRes.json();
-					const userOrgs = orgs.map(org => org.login);
+					const userOrgs = orgs.map((org) => org.login);
 					
-					const isMember = allowedOrgs.some(allowed => 
-						userOrgs.some(userOrg => userOrg.toLowerCase() === allowed.toLowerCase())
+					const isMember = allowedOrgs.some((allowed) => 
+						userOrgs.some((userOrg) => userOrg.toLowerCase() === allowed.toLowerCase())
 					);
 
 					if (!isMember) {
@@ -96,7 +149,7 @@ export default {
 						});
 					}
 				}
-			} catch (error) {
+			} catch (/** @type {any} */ error) {
 				console.error('Org check failed:', error);
 				// If org check fails, allow access (fail open)
 			}
