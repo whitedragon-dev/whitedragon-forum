@@ -36,6 +36,7 @@ The deploy output prints your Worker URL, e.g.
    - `ALLOWED_ORIGINS` (text) — comma-separated, e.g. `https://<user>.github.io,http://localhost:5173`
    - `GITHUB_CLIENT_ID` (text)
    - `GITHUB_CLIENT_SECRET` (**secret**)
+   - `GITHUB_ALLOWED_ORGANIZATIONS` (org allowed)
 3. Deploy and note the `*.workers.dev` URL.
 
 ## 3. Point the forum at it
