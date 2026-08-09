@@ -4,7 +4,7 @@ export default defineForumConfig({
 	site: {
 		name: 'Whitedragon Dev Hub',
 		description: 'A place for the members of whitedragon-dev to share knowledge',
-		logo: '❖',
+		logo: '/src/lib/assets/favicon.svg',
 		footer: 'Built with GitHub Discussions'
 	},
 
