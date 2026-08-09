@@ -48,7 +48,7 @@ export default defineForumConfig({
 		sort: 'CREATED_AT',
 		articles: { enabled: true },
 		topics: {
-			include: ['general', 'showcase', 'ideas', 'qna', 'announcements'],
+			include: [],
 			exclude: [],
 			restricted: ['announcements']
 		}
