@@ -8,14 +8,14 @@ import { defineForumConfig } from './src/lib/config/schema';
  *  Deployed on GitHub Pages with full authentication and reputation system
  * 
  *  ⚠️ EDIT THIS ONE PLACEHOLDER:
- *     - Ov23ctmoDN6GtAyNvRcE  → Your actual Client ID from GitHub OAuth App
+ *     - YOUR_GITHUB_OAUTH_CLIENT_ID  → Your actual Client ID from GitHub OAuth App
  */
 export default defineForumConfig({
 	// ─── Site Branding ──────────────────────────────────────────────────────
 	site: {
 		name: 'Whitedragon Dev Hub',
 		description: 'A place for the members of whitedragon-dev to share knowledge',
-		logo: '❖',                        // Unique emoji logo
+		logo: '❖',
 		footer: 'Built with ❤️ and GitHub Discussions'
 	},
 
@@ -41,13 +41,15 @@ export default defineForumConfig({
 
 	// ─── Authentication ──────────────────────────────────────────────────────
 	auth: {
-		allowToken: true,  // Allows PAT sign-in as fallback
+		allowToken: true,
 		oauth: {
 			// 🔑 EDIT THIS: Replace with your GitHub OAuth App Client ID
 			clientId: 'Ov23ctmoDN6GtAyNvRcE',
 			
 			// 🌐 Your Cloudflare Worker URL (already correct)
-			proxyUrl: 'https://whitedragon-forum-oauth.whitedragon-dev.workers.dev/'
+			proxyUrl: 'https://whitedragon-forum-oauth.whitedragon-dev.workers.dev',
+			
+			// 🔑 REQUEST read:org SCOPE for organization membership check
 			scope: 'read:org'
 		}
 	},
@@ -73,7 +75,7 @@ export default defineForumConfig({
 		topics: {
 			include: ['general', 'showcase', 'ideas', 'qna', 'announcements'],
 			exclude: [],
-			restricted: ['announcements']  // Only admins can post here
+			restricted: ['announcements']
 		}
 	},
 
@@ -97,7 +99,7 @@ export default defineForumConfig({
 			comment: 10
 		},
 		topics: { 
-			showcase: 50,  // Need 50 rep to post in showcase
+			showcase: 50,
 		},
 		onViolation: 'move',
 		fallbackTopic: 'general',
@@ -112,7 +114,7 @@ export default defineForumConfig({
 	// ─── Theme (DEV.to Purple Style) ──────────────────────────────────────
 	theme: {
 		light: {
-			primary: 'hsl(260 100% 40%)',        // DEV.to purple #5800d0
+			primary: 'hsl(260 100% 40%)',
 			primaryForeground: 'hsl(0 0% 100%)',
 			background: 'hsl(0 0% 98%)',
 			card: 'hsl(0 0% 100%)',
@@ -126,7 +128,7 @@ export default defineForumConfig({
 			link: 'hsl(260 100% 40%)'
 		},
 		dark: {
-			primary: 'hsl(260 100% 55%)',        // Brighter purple for dark mode
+			primary: 'hsl(260 100% 55%)',
 			primaryForeground: 'hsl(0 0% 100%)',
 			background: 'hsl(0 0% 8%)',
 			card: 'hsl(0 0% 13%)',
