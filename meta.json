@@ -1,0 +1,78 @@
+{
+	"archivedAt": "2026-08-22T18:35:44.314Z",
+	"categories": [
+		{
+			"id": "DIC_kwDOTyNqUs4DC76X",
+			"name": "Announcements",
+			"slug": "announcements",
+			"emojiHTML": "<div><img class=\"emoji\" title=\":electron:\" alt=\":electron:\" src=\"https://github.githubassets.com/images/icons/emoji/electron.png\" height=\"20\" width=\"20\" align=\"absmiddle\"></div>",
+			"description": "Updates from maintainers",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC76Y",
+			"name": "General",
+			"slug": "general",
+			"emojiHTML": "<div>💬</div>",
+			"description": "Chat about anything and everything here",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC76a",
+			"name": "Ideas",
+			"slug": "ideas",
+			"emojiHTML": "<div>💡</div>",
+			"description": "Share ideas for new features",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC-zk",
+			"name": "Minecraft",
+			"slug": "minecraft",
+			"emojiHTML": "<div>📟</div>",
+			"description": "A section made for\tfilowxy",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC76c",
+			"name": "Polls",
+			"slug": "polls",
+			"emojiHTML": "<div><img class=\"emoji\" title=\":copilot:\" alt=\":copilot:\" src=\"https://github.githubassets.com/images/icons/emoji/copilot.png\" height=\"20\" width=\"20\" align=\"absmiddle\"></div>",
+			"description": "Vote",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DDFBp",
+			"name": "Products",
+			"slug": "products",
+			"emojiHTML": "<div><img class=\"emoji\" title=\":atom:\" alt=\":atom:\" src=\"https://github.githubassets.com/images/icons/emoji/atom.png\" height=\"20\" width=\"20\" align=\"absmiddle\"></div>",
+			"description": "A place for members to share their products",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC76Z",
+			"name": "Q&A",
+			"slug": "q-a",
+			"emojiHTML": "<div>🌐</div>",
+			"description": "Ask the each other for help",
+			"isAnswerable": true
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DC-zy",
+			"name": "VPN&Proxies",
+			"slug": "vpn-proxies",
+			"emojiHTML": "<div>🖥️</div>",
+			"description": "Discuss about the state-of-the-art technologies that brings to us freedom and privacy when browsing the web",
+			"isAnswerable": false
+		},
+		{
+			"id": "DIC_kwDOTyNqUs4DDFBi",
+			"name": "Welcome",
+			"slug": "welcome",
+			"emojiHTML": "<div>👋</div>",
+			"description": "A section to welcome new users",
+			"isAnswerable": false
+		}
+	],
+	"pinned": []
+}
