@@ -1,0 +1,166 @@
+{
+	"id": "D_kwDOTyNqUs4AoZKD",
+	"number": 1,
+	"title": "Official Launch of Whitedragon Dev Hub",
+	"body": "<!-- dk:article -->\n\n\n\n---\n\n### 📢 Category: Announcements\n### 📌 Title: Official Launch of Whitedragon Dev Hub\n\n**Post Body:**\n\n> **Date:** August 10, 2026\n>\n> **From:** The Whitedragon Dev Team\n>\n> We are pleased to officially announce the launch of **Whitedragon Dev Hub** — a dedicated community platform for members of the **whitedragon-dev** organization.\n>\n> This forum serves as a central space for collaboration, knowledge sharing, and technical discussion among our members. It is designed to foster meaningful conversations, showcase member projects, and provide a supportive environment for learning and growth.\n>\n> ### 🏛️ Forum Structure\n>\n> The forum is organized into the following categories:\n>\n> - **📢 Announcements** — Official updates and communications from maintainers\n> - **👋 Welcome** — Introductions for new members\n> - **💬 General** — Open discussion on a wide range of topics\n> - **💡 Ideas** — Proposals and suggestions for new features or improvements\n> - **📟 Minecraft** — Dedicated space for Minecraft-related discussions\n> - **🤖 Polls** — Community voting and feedback collection\n> - **⚛️ Products** — A space to share and discuss member projects\n> - **🌐 Q&A** — Technical questions and peer-to-peer support\n> - **🖥️ VPN & Proxies** — Discussions on privacy, freedom, and networking technologies\n>\n> ### 🔐 Access & Authentication\n>\n> Access to the forum is restricted to members of the `whitedragon-dev` GitHub organization. Authentication is handled securely via GitHub OAuth, ensuring that only verified members can participate.\n>\n> ### 📋 Guidelines\n>\n> To maintain a constructive and respectful environment, all members are expected to adhere to the following principles:\n>\n> 1. **Be Respectful** — Treat all members with courtesy and professionalism.\n> 2. **Stay On Topic** — Post content in the appropriate categories.\n> 3. **No Spam or Self-Promotion** — Product sharing is welcome in the designated category, but unsolicited advertising is not permitted.\n> 4. **Help Others** — The strength of our community lies in our willingness to support one another.\n>\n> ### 🚀 Next Steps\n>\n> We encourage all members to explore the forum, introduce themselves in the **Welcome** category, and begin contributing to discussions. Your participation is what will make this community thrive.\n>\n> For any questions or feedback regarding the forum itself, please reach out to the maintainers via the **Ideas** category or directly on GitHub.\n>\n> Thank you for being part of this community. We look forward to the conversations ahead.\n>\n> Sincerely,\n>\n> **The Whitedragon Dev Team**\n\n---\n\n",
+	"bodyHTML": "\n<hr>\n<h3 dir=\"auto\">📢 Category: Announcements</h3>\n<h3 dir=\"auto\">📌 Title: Official Launch of Whitedragon Dev Hub</h3>\n<p dir=\"auto\"><strong>Post Body:</strong></p>\n<blockquote>\n<p dir=\"auto\"><strong>Date:</strong> August 10, 2026</p>\n<p dir=\"auto\"><strong>From:</strong> The Whitedragon Dev Team</p>\n<p dir=\"auto\">We are pleased to officially announce the launch of <strong>Whitedragon Dev Hub</strong> — a dedicated community platform for members of the <strong>whitedragon-dev</strong> organization.</p>\n<p dir=\"auto\">This forum serves as a central space for collaboration, knowledge sharing, and technical discussion among our members. It is designed to foster meaningful conversations, showcase member projects, and provide a supportive environment for learning and growth.</p>\n<h3 dir=\"auto\">🏛️ Forum Structure</h3>\n<p dir=\"auto\">The forum is organized into the following categories:</p>\n<ul dir=\"auto\">\n<li><strong>📢 Announcements</strong> — Official updates and communications from maintainers</li>\n<li><strong>👋 Welcome</strong> — Introductions for new members</li>\n<li><strong>💬 General</strong> — Open discussion on a wide range of topics</li>\n<li><strong>💡 Ideas</strong> — Proposals and suggestions for new features or improvements</li>\n<li><strong>📟 Minecraft</strong> — Dedicated space for Minecraft-related discussions</li>\n<li><strong>🤖 Polls</strong> — Community voting and feedback collection</li>\n<li><strong>⚛️ Products</strong> — A space to share and discuss member projects</li>\n<li><strong>🌐 Q&amp;A</strong> — Technical questions and peer-to-peer support</li>\n<li><strong>🖥️ VPN &amp; Proxies</strong> — Discussions on privacy, freedom, and networking technologies</li>\n</ul>\n<h3 dir=\"auto\">🔐 Access &amp; Authentication</h3>\n<p dir=\"auto\">Access to the forum is restricted to members of the <code class=\"notranslate\">whitedragon-dev</code> GitHub organization. Authentication is handled securely via GitHub OAuth, ensuring that only verified members can participate.</p>\n<h3 dir=\"auto\">📋 Guidelines</h3>\n<p dir=\"auto\">To maintain a constructive and respectful environment, all members are expected to adhere to the following principles:</p>\n<ol dir=\"auto\">\n<li><strong>Be Respectful</strong> — Treat all members with courtesy and professionalism.</li>\n<li><strong>Stay On Topic</strong> — Post content in the appropriate categories.</li>\n<li><strong>No Spam or Self-Promotion</strong> — Product sharing is welcome in the designated category, but unsolicited advertising is not permitted.</li>\n<li><strong>Help Others</strong> — The strength of our community lies in our willingness to support one another.</li>\n</ol>\n<h3 dir=\"auto\">🚀 Next Steps</h3>\n<p dir=\"auto\">We encourage all members to explore the forum, introduce themselves in the <strong>Welcome</strong> category, and begin contributing to discussions. Your participation is what will make this community thrive.</p>\n<p dir=\"auto\">For any questions or feedback regarding the forum itself, please reach out to the maintainers via the <strong>Ideas</strong> category or directly on GitHub.</p>\n<p dir=\"auto\">Thank you for being part of this community. We look forward to the conversations ahead.</p>\n<p dir=\"auto\">Sincerely,</p>\n<p dir=\"auto\"><strong>The Whitedragon Dev Team</strong></p>\n</blockquote>\n<hr>",
+	"url": "https://github.com/whitedragon-dev/whitedragon-forum/discussions/1",
+	"createdAt": "2026-08-10T15:53:13Z",
+	"lastEditedAt": null,
+	"upvoteCount": 1,
+	"viewerHasUpvoted": false,
+	"locked": false,
+	"author": {
+		"login": "whitedragon-one",
+		"avatarUrl": "https://avatars.githubusercontent.com/u/300095696?u=8181b0b0fa632bc42d4f3766d6c58007d73e18f0&v=4",
+		"url": "https://github.com/whitedragon-one"
+	},
+	"category": {
+		"id": "DIC_kwDOTyNqUs4DC76X",
+		"name": "Announcements",
+		"slug": "announcements",
+		"emojiHTML": "<div><img class=\"emoji\" title=\":electron:\" alt=\":electron:\" src=\"https://github.githubassets.com/images/icons/emoji/electron.png\" height=\"20\" width=\"20\" align=\"absmiddle\"></div>",
+		"description": "Updates from maintainers",
+		"isAnswerable": false
+	},
+	"reactionGroups": [
+		{
+			"content": "THUMBS_UP",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "THUMBS_DOWN",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "LAUGH",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "HOORAY",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "CONFUSED",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "HEART",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		},
+		{
+			"content": "ROCKET",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 1
+			}
+		},
+		{
+			"content": "EYES",
+			"viewerHasReacted": false,
+			"reactors": {
+				"totalCount": 0
+			}
+		}
+	],
+	"comments": {
+		"totalCount": 1,
+		"pageInfo": {
+			"endCursor": null,
+			"hasNextPage": false
+		},
+		"nodes": [
+			{
+				"id": "DC_kwDOTyNqUs4BFRwp",
+				"bodyHTML": "<p dir=\"auto\">In this forum, please do not criticize the use of technologies in the gray area</p>",
+				"createdAt": "2026-08-26T09:55:22Z",
+				"isAnswer": false,
+				"author": {
+					"login": "whitedragon-one",
+					"avatarUrl": "https://avatars.githubusercontent.com/u/300095696?u=8181b0b0fa632bc42d4f3766d6c58007d73e18f0&v=4",
+					"url": "https://github.com/whitedragon-one"
+				},
+				"reactionGroups": [
+					{
+						"content": "THUMBS_UP",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "THUMBS_DOWN",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "LAUGH",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "HOORAY",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "CONFUSED",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "HEART",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "ROCKET",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					},
+					{
+						"content": "EYES",
+						"viewerHasReacted": false,
+						"reactors": {
+							"totalCount": 0
+						}
+					}
+				],
+				"replies": {
+					"totalCount": 0,
+					"nodes": []
+				}
+			}
+		]
+	}
+}
